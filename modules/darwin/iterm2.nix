@@ -34,7 +34,7 @@ let
   # Fixed GUID for the Dynamic Profile so we can also reference it as the
   # default profile below. Generated once; must not change, or iTerm2 will
   # treat it as a new profile instead of updating this one.
-  guid = "F3D8B6B1-5C6A-4E51-9C1A-000000000001";
+  guid = "05B240E9-A86A-4296-9AF1-57DA084FE676";
 in
 {
   home.file."Library/Application Support/iTerm2/DynamicProfiles/home-manager.json".text =
@@ -73,9 +73,16 @@ in
           # run outside the GUI session entirely (e.g. a LaunchDaemon or
           # the launchd "User" domain), which is a different mechanism
           # than starting it as this profile's command.
+
+	  # Note: going through tmux like this currently breaks FiraCode's
+	  #       ligatures in a way that annoys me, but I'm going with it
+	  #       for now.
           "Command" = "${pkgs.tmux}/bin/tmux -CC new -A -s main";
           "Use Italic Font" = true;
-          "Normal Font" = "FiraCodeNerdFontMono-Regular 13";
+	  # empirically determined by choosing the FiraCode option I want
+	  # in iTerm2's font-picker; the string provided by Claude didn't
+	  # work.
+          "Normal Font" = "FiraCodeNF-Reg 13";
           "ASCII Ligatures" = true;
           "Non-ASCII Ligatures" = true;
           "Unlimited Scrollback" = true;
