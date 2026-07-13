@@ -74,14 +74,14 @@ in
           # the launchd "User" domain), which is a different mechanism
           # than starting it as this profile's command.
 
-	  # Note: going through tmux like this currently breaks FiraCode's
-	  #       ligatures in a way that annoys me, but I'm going with it
-	  #       for now.
+          # Note: going through tmux like this currently breaks FiraCode's
+          #       ligatures in a way that annoys me, but I'm going with it
+          #       for now.
           "Command" = "${pkgs.tmux}/bin/tmux -CC new -A -s main";
           "Use Italic Font" = true;
-	  # empirically determined by choosing the FiraCode option I want
-	  # in iTerm2's font-picker; the string provided by Claude didn't
-	  # work.
+          # empirically determined by choosing the FiraCode option I want
+          # in iTerm2's font-picker; the string provided by Claude didn't
+          # work.
           "Normal Font" = "FiraCodeNF-Reg 13";
           "ASCII Ligatures" = true;
           "Non-ASCII Ligatures" = true;
