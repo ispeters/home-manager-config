@@ -27,13 +27,13 @@
           inherit system;
           config.allowUnfree = true;
         };
-	# this is a per-system flag indication whether my shell.nix module
-	# ought to install Bash as a user package or not. For now, it's
-	# effectively hard-coded to true because the machines on which I'm
-	# an administrator will all have a system-provided Bash, but I'm
-	# leaving it here as a seam to make it possible to use my user
-	# config on a system that does not provide Bash.
-	extraSpecialArgs = { systemProvidesBash = true; };
+        # this is a per-system flag indication whether my shell.nix module
+        # ought to install Bash as a user package or not. For now, it's
+        # effectively hard-coded to true because the machines on which I'm
+        # an administrator will all have a system-provided Bash, but I'm
+        # leaving it here as a seam to make it possible to use my user
+        # config on a system that does not provide Bash.
+        extraSpecialArgs = { systemProvidesBash = true; };
         modules = [
           nixvim.homeModules.nixvim
           mac-app-util.homeManagerModules.default
