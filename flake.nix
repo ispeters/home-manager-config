@@ -27,7 +27,7 @@
           inherit system;
           config.allowUnfree = true;
         };
-        # this is a per-system flag indication whether my shell.nix module
+        # this is a per-system flag indicating whether my shell.nix module
         # ought to install Bash as a user package or not. For now, it's
         # effectively hard-coded to true because the machines on which I'm
         # an administrator will all have a system-provided Bash, but I'm
