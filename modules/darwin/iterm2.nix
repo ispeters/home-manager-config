@@ -128,5 +128,9 @@ in
       # Prefs > General > tmux. When true, the window that's running the
       # tmux client gets hidden until the last tmux window's shell ends.
       $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 AutoHideTmuxClientSession -bool true
+
+      # Prefer "Dark" them in Prefs > Appearance > General. It appears to
+      # be an enumerated list, and "Dark" is at index 1.
+      $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 TabStyleWithAutomaticOption 1
     '';
 }
