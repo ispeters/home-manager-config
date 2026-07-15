@@ -94,15 +94,27 @@ in
   # startup default just because it exists, so we have to say so explicitly.
   home.activation.setItermDefaultProfile =
     config.lib.dag.entryAfter [ "writeBoundary" ] ''
-      /usr/bin/defaults write com.googlecode.iterm2 "Default Bookmark Guid" "${guid}"
+      $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 "Default Bookmark Guid" "${guid}"
     '';
 
-  # This is the one Advanced setting from the blog post that isn't part of
-  # any profile. Key confirmed by diffing `defaults read com.googlecode.iterm2`
-  # before/after toggling "Convert italics to reverse video in tmux
-  # integration?" in Prefs > Advanced.
-  home.activation.setItermAdvancedSettings =
+  # Global (non-profile) iTerm2 preferences. Keys confirmed by diffing
+  # `defaults read com.googlecode.iterm2` before/after toggling each setting
+  # in the Preferences UI, since the on-disk keys don't always match the
+  # Python API docs or the UI labels.
+  home.activation.setItermGlobalPrefs =
     config.lib.dag.entryAfter [ "writeBoundary" ] ''
-      /usr/bin/defaults write com.googlecode.iterm2 ConvertItalicsToReverseVideoForTmux -bool NO
+      # "Convert italics to reverse video in tmux integration?" in
+      # Prefs > Advanced. Not part of any profile.
+      $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 ConvertItalicsToReverseVideoForTmux -bool NO
+
+      # "Use tmux profile" in Prefs > General > tmux. When true, all -CC
+      # windows use an iTerm2-managed copy of the "Default" profile instead
+      # of the profile of the connecting session, which silently drops
+      # Personal's settings (e.g. FiraCode ligatures) inside tmux. false
+      # makes -CC windows inherit the connecting session's profile instead.
+      # On this machine the compiled-in default was "true" despite the key
+      # being absent from defaults, so this must be pinned explicitly rather
+      # than left unset.
+      $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 TmuxUsesDedicatedProfile -bool false
     '';
 }
