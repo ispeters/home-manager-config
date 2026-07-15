@@ -116,5 +116,12 @@ in
       # being absent from defaults, so this must be pinned explicitly rather
       # than left unset.
       $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 TmuxUsesDedicatedProfile -bool false
+
+      # "New Window or Tab from tmux" dialog, shown on Cmd+N inside a tmux
+      # integration session (ambiguous: native window vs. tmux window).
+      # true = always treat it as a request for a new tmux window and never
+      # ask. Key confirmed by diffing defaults before/after checking
+      # "Remember my choice" > "New tmux Window".
+      $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 NoSyncNewWindowOrTabFromTmuxOpensTmux -bool true
     '';
 }
