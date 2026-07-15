@@ -123,5 +123,10 @@ in
       # ask. Key confirmed by diffing defaults before/after checking
       # "Remember my choice" > "New tmux Window".
       $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 NoSyncNewWindowOrTabFromTmuxOpensTmux -bool true
+
+      # "Automatically bury the tmux client session after connecting" in
+      # Prefs > General > tmux. When true, the window that's running the
+      # tmux client gets hidden until the last tmux window's shell ends.
+      $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 AutoHideTmuxClientSession -bool true
     '';
 }
