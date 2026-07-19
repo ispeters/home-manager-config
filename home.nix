@@ -7,6 +7,7 @@
   programs.home-manager.enable = true;
 
   imports = [
+    ./modules/common/devshells.nix
     ./modules/common/editor.nix
     ./modules/common/git.nix
     ./modules/common/ripgrep.nix

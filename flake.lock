@@ -21,6 +21,26 @@
         "type": "github"
       }
     },
+    "devshells": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1784482794,
+        "narHash": "sha256-Yo95ooVqAmgDvfTxlCyR24upXAQMoQqkI8D7V4iimfs=",
+        "owner": "ispeters",
+        "repo": "devshells",
+        "rev": "228e1495b331d09702dc05a82eb2430bfdde67d8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ispeters",
+        "repo": "devshells",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -275,6 +295,7 @@
     },
     "root": {
       "inputs": {
+        "devshells": "devshells",
         "home-manager": "home-manager",
         "mac-app-util": "mac-app-util",
         "nixpkgs": "nixpkgs_5",
