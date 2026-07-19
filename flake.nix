@@ -17,7 +17,15 @@
     devshells.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixvim, mac-app-util, devshells }:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      nixvim,
+      mac-app-util,
+      devshells,
+    }:
     let
       # Claude provided this logic for checking whether we're running
       # on Darwin or NixOS; I don't understand it very well so I'm not
@@ -39,12 +47,16 @@
         # an administrator will all have a system-provided Bash, but I'm
         # leaving it here as a seam to make it possible to use my user
         # config on a system that does not provide Bash.
-        extraSpecialArgs = { systemProvidesBash = true; inherit devshells; };
+        extraSpecialArgs = {
+          systemProvidesBash = true;
+          inherit devshells;
+        };
         modules = [
           nixvim.homeModules.nixvim
           mac-app-util.homeManagerModules.default
           ./home.nix
-        ] ++ (if isDarwin then [ ./modules/darwin ] else [ ./modules/linux ]);
+        ]
+        ++ (if isDarwin then [ ./modules/darwin ] else [ ./modules/linux ]);
       };
     };
 }

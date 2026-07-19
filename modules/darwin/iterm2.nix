@@ -50,101 +50,100 @@ let
 in
 {
   home.file."Library/Application Support/iTerm2/DynamicProfiles/home-manager.json".text =
-    builtins.toJSON {
-      "Profiles" = [
-        {
-          "Name" = "Personal";
-          "Guid" = guid;
-          "Custom Command" = "Yes";
-          # No ssh-agent wrapper here: macOS's launchd-managed ssh-agent
-          # already pins a single, stable SSH_AUTH_SOCK for the whole login
-          # session, so tmux (and everything under it) inherits it for
-          # free. Wrapping this command in `ssh-agent tmux ...` would spawn
-          # a *separate*, empty agent scoped to this command instead --
-          # losing access to whatever's loaded into the system agent via
-          # Keychain, which defeats the point. That wrapper idiom only
-          # earns its keep where there's no OS-provided session-wide agent
-          # to begin with (e.g. bare Linux), which isn't the case here.
-          #
-          # tmux itself is Nix-managed, so we reference it via pkgs.tmux
-          # rather than hardcoding the Homebrew path from the blog post.
-          # This also means the path here tracks whatever tmux build is
-          # currently active -- home-manager switch rewrites this file
-          # automatically when that changes.
-          #
-          # Persistence note: this tmux server (and the system ssh-agent)
-          # only survive as long as the underlying GUI session isn't torn
-          # down. Locking the screen or Fast User Switching to another
-          # account leaves the session running in the background, so the
-          # tmux server (and anything ssh'd in remotely to reattach to it)
-          # keeps going untouched -- this is the case relied on for
-          # reattaching from another device. An actual logout, by
-          # contrast, kills all foreground and background processes in
-          # that session, tmux included, so this setup does NOT survive a
-          # real logout. If that ever needs to change, tmux would have to
-          # run outside the GUI session entirely (e.g. a LaunchDaemon or
-          # the launchd "User" domain), which is a different mechanism
-          # than starting it as this profile's command.
+    builtins.toJSON
+      {
+        "Profiles" = [
+          {
+            "Name" = "Personal";
+            "Guid" = guid;
+            "Custom Command" = "Yes";
+            # No ssh-agent wrapper here: macOS's launchd-managed ssh-agent
+            # already pins a single, stable SSH_AUTH_SOCK for the whole login
+            # session, so tmux (and everything under it) inherits it for
+            # free. Wrapping this command in `ssh-agent tmux ...` would spawn
+            # a *separate*, empty agent scoped to this command instead --
+            # losing access to whatever's loaded into the system agent via
+            # Keychain, which defeats the point. That wrapper idiom only
+            # earns its keep where there's no OS-provided session-wide agent
+            # to begin with (e.g. bare Linux), which isn't the case here.
+            #
+            # tmux itself is Nix-managed, so we reference it via pkgs.tmux
+            # rather than hardcoding the Homebrew path from the blog post.
+            # This also means the path here tracks whatever tmux build is
+            # currently active -- home-manager switch rewrites this file
+            # automatically when that changes.
+            #
+            # Persistence note: this tmux server (and the system ssh-agent)
+            # only survive as long as the underlying GUI session isn't torn
+            # down. Locking the screen or Fast User Switching to another
+            # account leaves the session running in the background, so the
+            # tmux server (and anything ssh'd in remotely to reattach to it)
+            # keeps going untouched -- this is the case relied on for
+            # reattaching from another device. An actual logout, by
+            # contrast, kills all foreground and background processes in
+            # that session, tmux included, so this setup does NOT survive a
+            # real logout. If that ever needs to change, tmux would have to
+            # run outside the GUI session entirely (e.g. a LaunchDaemon or
+            # the launchd "User" domain), which is a different mechanism
+            # than starting it as this profile's command.
 
-          # Note: going through tmux like this currently breaks FiraCode's
-          #       ligatures in a way that annoys me, but I'm going with it
-          #       for now.
-          "Command" = "${pkgs.tmux}/bin/tmux -CC new -A -s main";
-          "Use Italic Font" = true;
-          # empirically determined by choosing the FiraCode option I want
-          # in iTerm2's font-picker; the string provided by Claude didn't
-          # work.
-          "Normal Font" = "FiraCodeNF-Reg 13";
-          "ASCII Ligatures" = true;
-          "Non-ASCII Ligatures" = true;
-          "Unlimited Scrollback" = true;
-        }
-      ];
-    };
+            # Note: going through tmux like this currently breaks FiraCode's
+            #       ligatures in a way that annoys me, but I'm going with it
+            #       for now.
+            "Command" = "${pkgs.tmux}/bin/tmux -CC new -A -s main";
+            "Use Italic Font" = true;
+            # empirically determined by choosing the FiraCode option I want
+            # in iTerm2's font-picker; the string provided by Claude didn't
+            # work.
+            "Normal Font" = "FiraCodeNF-Reg 13";
+            "ASCII Ligatures" = true;
+            "Non-ASCII Ligatures" = true;
+            "Unlimited Scrollback" = true;
+          }
+        ];
+      };
 
   home.file.".iterm2_shell_integration.bash".source = itermShellIntegrationBash;
 
   # Dynamic Profiles are merely *available*; iTerm2 won't use one as the
   # startup default just because it exists, so we have to say so explicitly.
-  home.activation.setItermDefaultProfile =
-    config.lib.dag.entryAfter [ "writeBoundary" ] ''
-      $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 "Default Bookmark Guid" "${guid}"
-    '';
+  home.activation.setItermDefaultProfile = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+    $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 "Default Bookmark Guid" "${guid}"
+  '';
 
   # Global (non-profile) iTerm2 preferences. Keys confirmed by diffing
   # `defaults read com.googlecode.iterm2` before/after toggling each setting
   # in the Preferences UI, since the on-disk keys don't always match the
   # Python API docs or the UI labels.
-  home.activation.setItermGlobalPrefs =
-    config.lib.dag.entryAfter [ "writeBoundary" ] ''
-      # "Convert italics to reverse video in tmux integration?" in
-      # Prefs > Advanced. Not part of any profile.
-      $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 ConvertItalicsToReverseVideoForTmux -bool NO
+  home.activation.setItermGlobalPrefs = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+    # "Convert italics to reverse video in tmux integration?" in
+    # Prefs > Advanced. Not part of any profile.
+    $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 ConvertItalicsToReverseVideoForTmux -bool NO
 
-      # "Use tmux profile" in Prefs > General > tmux. When true, all -CC
-      # windows use an iTerm2-managed copy of the "Default" profile instead
-      # of the profile of the connecting session, which silently drops
-      # Personal's settings (e.g. FiraCode ligatures) inside tmux. false
-      # makes -CC windows inherit the connecting session's profile instead.
-      # On this machine the compiled-in default was "true" despite the key
-      # being absent from defaults, so this must be pinned explicitly rather
-      # than left unset.
-      $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 TmuxUsesDedicatedProfile -bool false
+    # "Use tmux profile" in Prefs > General > tmux. When true, all -CC
+    # windows use an iTerm2-managed copy of the "Default" profile instead
+    # of the profile of the connecting session, which silently drops
+    # Personal's settings (e.g. FiraCode ligatures) inside tmux. false
+    # makes -CC windows inherit the connecting session's profile instead.
+    # On this machine the compiled-in default was "true" despite the key
+    # being absent from defaults, so this must be pinned explicitly rather
+    # than left unset.
+    $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 TmuxUsesDedicatedProfile -bool false
 
-      # "New Window or Tab from tmux" dialog, shown on Cmd+N inside a tmux
-      # integration session (ambiguous: native window vs. tmux window).
-      # true = always treat it as a request for a new tmux window and never
-      # ask. Key confirmed by diffing defaults before/after checking
-      # "Remember my choice" > "New tmux Window".
-      $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 NoSyncNewWindowOrTabFromTmuxOpensTmux -bool true
+    # "New Window or Tab from tmux" dialog, shown on Cmd+N inside a tmux
+    # integration session (ambiguous: native window vs. tmux window).
+    # true = always treat it as a request for a new tmux window and never
+    # ask. Key confirmed by diffing defaults before/after checking
+    # "Remember my choice" > "New tmux Window".
+    $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 NoSyncNewWindowOrTabFromTmuxOpensTmux -bool true
 
-      # "Automatically bury the tmux client session after connecting" in
-      # Prefs > General > tmux. When true, the window that's running the
-      # tmux client gets hidden until the last tmux window's shell ends.
-      $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 AutoHideTmuxClientSession -bool true
+    # "Automatically bury the tmux client session after connecting" in
+    # Prefs > General > tmux. When true, the window that's running the
+    # tmux client gets hidden until the last tmux window's shell ends.
+    $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 AutoHideTmuxClientSession -bool true
 
-      # Prefer "Dark" them in Prefs > Appearance > General. It appears to
-      # be an enumerated list, and "Dark" is at index 1.
-      $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 TabStyleWithAutomaticOption 1
-    '';
+    # Prefer "Dark" them in Prefs > Appearance > General. It appears to
+    # be an enumerated list, and "Dark" is at index 1.
+    $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 TabStyleWithAutomaticOption 1
+  '';
 }

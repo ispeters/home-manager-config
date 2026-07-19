@@ -19,7 +19,13 @@
       enable = true;
       settings = {
         ensure_installed = [
-          "cpp" "lua" "vim" "vimdoc" "query" "markdown" "markdown_inline"
+          "cpp"
+          "lua"
+          "vim"
+          "vimdoc"
+          "query"
+          "markdown"
+          "markdown_inline"
         ];
         highlight.enable = true;
       };

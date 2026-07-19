@@ -1,4 +1,8 @@
-{ pkgs, systemProvidesBash ? false, ... }:
+{
+  pkgs,
+  systemProvidesBash ? false,
+  ...
+}:
 {
   programs.bash = {
     enable = true;
