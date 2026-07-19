@@ -23,9 +23,28 @@
   # a passphrase gets added or GUI/agent-sharing needs come up.
   programs.ssh = {
     enable = true;
-    matchBlocks."github.com" = {
-      addKeysToAgent = "yes";
-      identityFile = "~/.ssh/github";
+    enableDefaultConfig = false;
+
+    settings = {
+      # this explicitly declares the defaults at the time of this change
+      # relying on the defaults has apparently been deprecated
+      "*" = {
+        AddKeysToAgent = "no";
+        Compression = false;
+        ControlMaster = "no";
+        ControlPath = "~/.ssh/master-%r@%n:%p";
+        ControlPersist = "no";
+        ForwardAgent = false;
+        HashKnownHosts = false;
+        ServerAliveCountMax = 3;
+        ServerAliveInterval = 0;
+        UserKnownHostsFile = "~/.ssh/known_hosts";
+      };
+
+      "github.com" = {
+        AddKeysToAgent = "yes";
+        IdentityFile = "~/.ssh/github";
+      };
     };
   };
 }
