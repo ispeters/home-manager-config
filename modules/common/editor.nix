@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   programs.nixvim = {
     enable = true;
     viAlias = true;

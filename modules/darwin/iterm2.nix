@@ -49,9 +49,9 @@ let
   };
 in
 {
-  home.file."Library/Application Support/iTerm2/DynamicProfiles/home-manager.json".text =
-    builtins.toJSON
-      {
+  home = {
+    file = {
+      "Library/Application Support/iTerm2/DynamicProfiles/home-manager.json".text = builtins.toJSON {
         "Profiles" = [
           {
             "Name" = "Personal";
@@ -103,47 +103,51 @@ in
         ];
       };
 
-  home.file.".iterm2_shell_integration.bash".source = itermShellIntegrationBash;
+      ".iterm2_shell_integration.bash".source = itermShellIntegrationBash;
+    };
 
-  # Dynamic Profiles are merely *available*; iTerm2 won't use one as the
-  # startup default just because it exists, so we have to say so explicitly.
-  home.activation.setItermDefaultProfile = config.lib.dag.entryAfter [ "writeBoundary" ] ''
-    $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 "Default Bookmark Guid" "${guid}"
-  '';
+    activation = {
+      # Dynamic Profiles are merely *available*; iTerm2 won't use one as the
+      # startup default just because it exists, so we have to say so explicitly.
+      setItermDefaultProfile = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+        $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 "Default Bookmark Guid" "${guid}"
+      '';
 
-  # Global (non-profile) iTerm2 preferences. Keys confirmed by diffing
-  # `defaults read com.googlecode.iterm2` before/after toggling each setting
-  # in the Preferences UI, since the on-disk keys don't always match the
-  # Python API docs or the UI labels.
-  home.activation.setItermGlobalPrefs = config.lib.dag.entryAfter [ "writeBoundary" ] ''
-    # "Convert italics to reverse video in tmux integration?" in
-    # Prefs > Advanced. Not part of any profile.
-    $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 ConvertItalicsToReverseVideoForTmux -bool NO
+      # Global (non-profile) iTerm2 preferences. Keys confirmed by diffing
+      # `defaults read com.googlecode.iterm2` before/after toggling each setting
+      # in the Preferences UI, since the on-disk keys don't always match the
+      # Python API docs or the UI labels.
+      setItermGlobalPrefs = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+        # "Convert italics to reverse video in tmux integration?" in
+        # Prefs > Advanced. Not part of any profile.
+        $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 ConvertItalicsToReverseVideoForTmux -bool NO
 
-    # "Use tmux profile" in Prefs > General > tmux. When true, all -CC
-    # windows use an iTerm2-managed copy of the "Default" profile instead
-    # of the profile of the connecting session, which silently drops
-    # Personal's settings (e.g. FiraCode ligatures) inside tmux. false
-    # makes -CC windows inherit the connecting session's profile instead.
-    # On this machine the compiled-in default was "true" despite the key
-    # being absent from defaults, so this must be pinned explicitly rather
-    # than left unset.
-    $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 TmuxUsesDedicatedProfile -bool false
+        # "Use tmux profile" in Prefs > General > tmux. When true, all -CC
+        # windows use an iTerm2-managed copy of the "Default" profile instead
+        # of the profile of the connecting session, which silently drops
+        # Personal's settings (e.g. FiraCode ligatures) inside tmux. false
+        # makes -CC windows inherit the connecting session's profile instead.
+        # On this machine the compiled-in default was "true" despite the key
+        # being absent from defaults, so this must be pinned explicitly rather
+        # than left unset.
+        $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 TmuxUsesDedicatedProfile -bool false
 
-    # "New Window or Tab from tmux" dialog, shown on Cmd+N inside a tmux
-    # integration session (ambiguous: native window vs. tmux window).
-    # true = always treat it as a request for a new tmux window and never
-    # ask. Key confirmed by diffing defaults before/after checking
-    # "Remember my choice" > "New tmux Window".
-    $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 NoSyncNewWindowOrTabFromTmuxOpensTmux -bool true
+        # "New Window or Tab from tmux" dialog, shown on Cmd+N inside a tmux
+        # integration session (ambiguous: native window vs. tmux window).
+        # true = always treat it as a request for a new tmux window and never
+        # ask. Key confirmed by diffing defaults before/after checking
+        # "Remember my choice" > "New tmux Window".
+        $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 NoSyncNewWindowOrTabFromTmuxOpensTmux -bool true
 
-    # "Automatically bury the tmux client session after connecting" in
-    # Prefs > General > tmux. When true, the window that's running the
-    # tmux client gets hidden until the last tmux window's shell ends.
-    $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 AutoHideTmuxClientSession -bool true
+        # "Automatically bury the tmux client session after connecting" in
+        # Prefs > General > tmux. When true, the window that's running the
+        # tmux client gets hidden until the last tmux window's shell ends.
+        $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 AutoHideTmuxClientSession -bool true
 
-    # Prefer "Dark" them in Prefs > Appearance > General. It appears to
-    # be an enumerated list, and "Dark" is at index 1.
-    $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 TabStyleWithAutomaticOption 1
-  '';
+        # Prefer "Dark" them in Prefs > Appearance > General. It appears to
+        # be an enumerated list, and "Dark" is at index 1.
+        $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 TabStyleWithAutomaticOption 1
+      '';
+    };
+  };
 }

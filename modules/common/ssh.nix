@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   # We deliberately do NOT enable home-manager's services.ssh-agent here and
   # instead rely on the ssh-agent macOS already runs via launchd. Reasoning:
   #
