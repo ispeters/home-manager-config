@@ -35,6 +35,18 @@ let
   # default profile below. Generated once; must not change, or iTerm2 will
   # treat it as a new profile instead of updating this one.
   guid = "05B240E9-A86A-4296-9AF1-57DA084FE676";
+
+  # Vendored from https://github.com/gnachman/iTerm2-shell-integration, the
+  # small repo iTerm2's shell integration scripts now live in (split out of
+  # the main app repo). Pinned by hash rather than curled at
+  # activation/shell-startup time so a change upstream shows up as an
+  # explicit hash mismatch instead of silently changing what gets sourced.
+  # shell.nix's bash initExtra already sources this file if present; this
+  # is what makes it actually present.
+  itermShellIntegrationBash = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/gnachman/iTerm2-shell-integration/main/shell_integration/bash";
+    hash = "sha256-yHVNnDW8JJNL56sgc1ZRyaAZvStELr+0HZED5i6VxbA=";
+  };
 in
 {
   home.file."Library/Application Support/iTerm2/DynamicProfiles/home-manager.json".text =
@@ -89,6 +101,8 @@ in
         }
       ];
     };
+
+  home.file.".iterm2_shell_integration.bash".source = itermShellIntegrationBash;
 
   # Dynamic Profiles are merely *available*; iTerm2 won't use one as the
   # startup default just because it exists, so we have to say so explicitly.
