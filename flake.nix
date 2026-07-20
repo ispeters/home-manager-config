@@ -24,6 +24,7 @@
       nixvim,
       mac-app-util,
       devshells,
+      ...
     }:
     let
       # Claude provided this logic for checking whether we're running
