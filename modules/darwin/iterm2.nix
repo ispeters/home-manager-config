@@ -54,9 +54,7 @@ in
       "Library/Application Support/iTerm2/DynamicProfiles/home-manager.json".text = builtins.toJSON {
         "Profiles" = [
           {
-            "Name" = "Personal";
-            "Guid" = guid;
-            "Custom Command" = "Yes";
+            "ASCII Ligatures" = true;
             # No ssh-agent wrapper here: macOS's launchd-managed ssh-agent
             # already pins a single, stable SSH_AUTH_SOCK for the whole login
             # session, so tmux (and everything under it) inherits it for
@@ -86,19 +84,20 @@ in
             # run outside the GUI session entirely (e.g. a LaunchDaemon or
             # the launchd "User" domain), which is a different mechanism
             # than starting it as this profile's command.
-
-            # Note: going through tmux like this currently breaks FiraCode's
-            #       ligatures in a way that annoys me, but I'm going with it
-            #       for now.
             "Command" = "${pkgs.tmux}/bin/tmux -CC new -A -s main";
-            "Use Italic Font" = true;
+            "Custom Command" = "Yes";
+            "Guid" = guid;
+            "Name" = "Personal";
+            "Non-ASCII Ligatures" = true;
             # empirically determined by choosing the FiraCode option I want
             # in iTerm2's font-picker; the string provided by Claude didn't
             # work.
             "Normal Font" = "FiraCodeNF-Reg 13";
-            "ASCII Ligatures" = true;
-            "Non-ASCII Ligatures" = true;
+            # Enable Opt-F and Opt-B at the shell prompt to move back and
+	    # forth by words rather than sending composed characters.
+            "Option Key Sends" = 2; # Left Option → Esc+
             "Unlimited Scrollback" = true;
+            "Use Italic Font" = true;
           }
         ];
       };
