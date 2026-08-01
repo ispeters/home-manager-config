@@ -15,6 +15,8 @@
         export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
         source ~/.iterm2_shell_integration.bash || true
       fi
+
+      ${builtins.readFile ./devshell-prompt.sh}
     '';
   };
 
