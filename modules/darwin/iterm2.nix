@@ -55,26 +55,23 @@ in
         "Profiles" = [
           {
             "ASCII Ligatures" = true;
-            # Solved backward from a target *apparent* color of muted
-            # steel blue (~#6E97B8, same cool family as the depth-1 PS1
-            # dot in devshell-prompt.sh) against this profile's actual
-            # black background, at Alpha 0.75:
-            #   raw = apparent / alpha  (background term drops out
-            #   entirely on black, since apparent = raw*alpha +
-            #   background*(1-alpha) and background = 0 here)
-            # iTerm2's own default badge color reads as a dull,
-            # desaturated red on this profile because it wasn't chosen
-            # against Personal's actual background -- compositing over
-            # black at typical badge alphas pulls any raw color *toward*
-            # black, not toward white the way it would on a light
-            # profile, so a default tuned for a light background reads
-            # muddy here rather than soft.
+            # Chosen by eye in iTerm2's own color picker against this
+            # profile's actual black background/white text, R:69 G:147
+            # B:252 A:71 on a 0-255 slider. Composites (apparent =
+            # raw*alpha, since background is black) to roughly
+            # rgb(19,41,70) -- hue ~214 degrees, ~57% saturation, ~17%
+            # lightness: a fairly dark, subdued navy. Saturation nearly
+            # doubled versus the earlier solved-for color (which was
+            # ~34%), which is what actually fixed the "reads too red"
+            # complaint -- that one wasn't hue-shifted toward red, it was
+            # just under-saturated/washed-out enough to look gray-ish
+            # next to the fully-saturated ANSI blue in the PS1 dot.
             "Badge Color" = {
               "Color Space" = "sRGB";
-              "Red Component" = 0.58;
-              "Green Component" = 0.79;
-              "Blue Component" = 0.96;
-              "Alpha Component" = 0.75;
+              "Red Component" = 0.2706;
+              "Green Component" = 0.5765;
+              "Blue Component" = 0.9882;
+              "Alpha Component" = 0.2784;
             };
             # No ssh-agent wrapper here: macOS's launchd-managed ssh-agent
             # already pins a single, stable SSH_AUTH_SOCK for the whole login
