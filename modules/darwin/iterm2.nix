@@ -55,6 +55,27 @@ in
         "Profiles" = [
           {
             "ASCII Ligatures" = true;
+            # Solved backward from a target *apparent* color of muted
+            # steel blue (~#6E97B8, same cool family as the depth-1 PS1
+            # dot in devshell-prompt.sh) against this profile's actual
+            # black background, at Alpha 0.75:
+            #   raw = apparent / alpha  (background term drops out
+            #   entirely on black, since apparent = raw*alpha +
+            #   background*(1-alpha) and background = 0 here)
+            # iTerm2's own default badge color reads as a dull,
+            # desaturated red on this profile because it wasn't chosen
+            # against Personal's actual background -- compositing over
+            # black at typical badge alphas pulls any raw color *toward*
+            # black, not toward white the way it would on a light
+            # profile, so a default tuned for a light background reads
+            # muddy here rather than soft.
+            "Badge Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0.58;
+              "Green Component" = 0.79;
+              "Blue Component" = 0.96;
+              "Alpha Component" = 0.75;
+            };
             # No ssh-agent wrapper here: macOS's launchd-managed ssh-agent
             # already pins a single, stable SSH_AUTH_SOCK for the whole login
             # session, so tmux (and everything under it) inherits it for
