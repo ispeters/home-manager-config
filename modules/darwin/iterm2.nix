@@ -54,6 +54,181 @@ in
       "Library/Application Support/iTerm2/DynamicProfiles/home-manager.json".text = builtins.toJSON {
         "Profiles" = [
           {
+            # Vercel theme, pulled directly from the .itermcolors source
+            # rather than transcribed by hand from a screenshot --
+            # https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/schemes/Vercel.itermcolors
+            # Same key names/shape as Badge Color below; this is what
+            # "Copy Profile as JSON" from iTerm2 itself would have
+            # produced, just sourced from the upstream file instead so
+            # there's no manual color-picker step to get it into Personal.
+            "Ansi 0 Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0;
+              "Green Component" = 0;
+              "Blue Component" = 0;
+              "Alpha Component" = 1;
+            };
+            "Ansi 1 Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0.9882;
+              "Green Component" = 0;
+              "Blue Component" = 0.2118;
+              "Alpha Component" = 1;
+            };
+            "Ansi 2 Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0.1608;
+              "Green Component" = 0.6627;
+              "Blue Component" = 0.2824;
+              "Alpha Component" = 1;
+            };
+            "Ansi 3 Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 1;
+              "Green Component" = 0.6824;
+              "Blue Component" = 0;
+              "Alpha Component" = 1;
+            };
+            "Ansi 4 Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0;
+              "Green Component" = 0.4157;
+              "Blue Component" = 1;
+              "Alpha Component" = 1;
+            };
+            "Ansi 5 Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0.9529;
+              "Green Component" = 0.1569;
+              "Blue Component" = 0.5098;
+              "Alpha Component" = 1;
+            };
+            "Ansi 6 Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0;
+              "Green Component" = 0.6745;
+              "Blue Component" = 0.5882;
+              "Alpha Component" = 1;
+            };
+            "Ansi 7 Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0.9961;
+              "Green Component" = 1;
+              "Blue Component" = 1;
+              "Alpha Component" = 1;
+            };
+            "Ansi 8 Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0.6588;
+              "Green Component" = 0.6588;
+              "Blue Component" = 0.6588;
+              "Alpha Component" = 1;
+            };
+            "Ansi 9 Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 1;
+              "Green Component" = 0.502;
+              "Blue Component" = 0.502;
+              "Alpha Component" = 1;
+            };
+            "Ansi 10 Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0.2941;
+              "Green Component" = 0.8824;
+              "Blue Component" = 0.3647;
+              "Alpha Component" = 1;
+            };
+            "Ansi 11 Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 1;
+              "Green Component" = 0.6824;
+              "Blue Component" = 0;
+              "Alpha Component" = 1;
+            };
+            "Ansi 12 Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0.2863;
+              "Green Component" = 0.6824;
+              "Blue Component" = 1;
+              "Alpha Component" = 1;
+            };
+            "Ansi 13 Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0.9765;
+              "Green Component" = 0.4941;
+              "Blue Component" = 0.6588;
+              "Alpha Component" = 1;
+            };
+            "Ansi 14 Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0;
+              "Green Component" = 0.8941;
+              "Blue Component" = 0.7686;
+              "Alpha Component" = 1;
+            };
+            "Ansi 15 Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0.9961;
+              "Green Component" = 0.9961;
+              "Blue Component" = 0.9961;
+              "Alpha Component" = 1;
+            };
+            "Background Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0.0627;
+              "Green Component" = 0.0627;
+              "Blue Component" = 0.0627;
+              "Alpha Component" = 1;
+            };
+            "Bold Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0.9804;
+              "Green Component" = 0.9804;
+              "Blue Component" = 0.9804;
+              "Alpha Component" = 1;
+            };
+            "Cursor Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0.9529;
+              "Green Component" = 0.1569;
+              "Blue Component" = 0.5098;
+              "Alpha Component" = 1;
+            };
+            "Cursor Guide Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0.9804;
+              "Green Component" = 0.9804;
+              "Blue Component" = 0.9804;
+              "Alpha Component" = 1;
+            };
+            "Cursor Text Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0.9804;
+              "Green Component" = 0.9804;
+              "Blue Component" = 0.9804;
+              "Alpha Component" = 1;
+            };
+            "Foreground Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0.9804;
+              "Green Component" = 0.9804;
+              "Blue Component" = 0.9804;
+              "Alpha Component" = 1;
+            };
+            "Selected Text Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0.9804;
+              "Green Component" = 0.9804;
+              "Blue Component" = 0.9804;
+              "Alpha Component" = 1;
+            };
+            "Selection Color" = {
+              "Color Space" = "sRGB";
+              "Red Component" = 0;
+              "Green Component" = 0.3569;
+              "Blue Component" = 0.9059;
+              "Alpha Component" = 1;
+            };
             "ASCII Ligatures" = true;
             # Chosen by eye in iTerm2's own color picker against this
             # profile's actual black background/white text, R:69 G:147
