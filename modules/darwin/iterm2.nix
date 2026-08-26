@@ -339,6 +339,18 @@ in
         # Prefer "Dark" them in Prefs > Appearance > General. It appears to
         # be an enumerated list, and "Dark" is at index 1.
         $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 TabStyleWithAutomaticOption 1
+
+        # "Check for updates automatically" in Prefs > General > Software
+        # Upgrades. iTerm2 is installed via nixpkgs (see packages.nix), so
+        # its version is pinned by the nixpkgs flake input, same as every
+        # other Nix-managed tool -- letting Sparkle check for and prompt to
+        # install updates out-of-band would silently drift the running
+        # version away from what the config declares, with no corresponding
+        # entry in git history to explain a later behavior change. Key is
+        # the standard Sparkle preference name (SOFTWARE_UPDATE_ENABLE_AUTOMATIC_CHECKS
+        # in iTerm2's own Python API docs), also confirmed via the usual
+        # defaults-diff method.
+        $DRY_RUN_CMD /usr/bin/defaults write com.googlecode.iterm2 SUEnableAutomaticChecks -bool false
       '';
     };
   };
