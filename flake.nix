@@ -7,8 +7,10 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixvim = {
       url = "github:nix-community/nixvim/nixos-26.05";
-      # this seems to generate warnings that I would prefer not to see
-      #inputs.nixpkgs.follows = "nixpkgs";
+      # nixvim's nixos-26.05 branch matches our nixpkgs-26.05-darwin
+      # release, so following our nixpkgs should not trip nixvim's
+      # version-mismatch check
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     mac-app-util.url = "github:hraban/mac-app-util";
 
