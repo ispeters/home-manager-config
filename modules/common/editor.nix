@@ -1,4 +1,5 @@
-_: {
+{ pkgs, ... }:
+{
   programs.nixvim = {
     enable = true;
     viAlias = true;
@@ -16,18 +17,22 @@ _: {
 
     plugins.treesitter = {
       enable = true;
-      settings = {
-        ensure_installed = [
-          "cpp"
-          "lua"
-          "vim"
-          "vimdoc"
-          "query"
-          "markdown"
-          "markdown_inline"
-        ];
-        highlight.enable = true;
-      };
+
+      # Install parsers from nixpkgs rather than having nvim-treesitter
+      # download and compile them at runtime via `ensure_installed`;
+      # the runtime approach pulls a C compiler and Node.js into the
+      # home-manager closure.
+      grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+        cpp
+        lua
+        vim
+        vimdoc
+        query
+        markdown
+        markdown_inline
+      ];
+
+      settings.highlight.enable = true;
     };
 
     plugins.lsp.enable = true;
