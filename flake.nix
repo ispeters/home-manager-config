@@ -7,12 +7,14 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixvim = {
       url = "github:nix-community/nixvim/nixos-26.05";
-      # nixvim's nixos-26.05 branch matches our nixpkgs-26.05-darwin
-      # release, so following our nixpkgs should not trip nixvim's
-      # version-mismatch check
+      # follow our nixpkgs; programs.nixvim.nixpkgs.source is set explicitly
+      # in editor.nix to acknowledge the divergence from nixvim's own pin
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    mac-app-util.url = "github:hraban/mac-app-util";
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # reference my catalogue of language- and tool-specific devshells
     devshells.url = "github:ispeters/devshells";

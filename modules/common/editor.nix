@@ -2,6 +2,7 @@
 {
   programs.nixvim = {
     enable = true;
+    nixpkgs.source = pkgs.path;   # deliberately use our nixpkgs, not nixvim's pin
     viAlias = true;
     vimAlias = true;
 
