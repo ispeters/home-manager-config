@@ -1,10 +1,15 @@
 _: {
   programs.tmux = {
     enable = true;
+    # enable focus-reporting in the terminal; this enables Neovim's
+    # `autoread` feature, which checks files for on-disk changes
+    # relative to buffer contents every time Neovim gains focus.
+    focusEvents = true;
+    terminal = "tmux-256color";
     extraConfig = ''
       set-option -g allow-passthrough on
-      set -g default-terminal "tmux-256color"
-      set -ag terminal-overrides ",xterm-256color:RGB"
+      # tell tmux the outer terminal supports 24-bit colour
+      set-option -as terminal-features ",xterm-256color:RGB"
     '';
   };
 }
