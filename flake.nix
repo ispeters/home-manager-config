@@ -7,10 +7,14 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixvim = {
       url = "github:nix-community/nixvim/nixos-26.05";
-      # this seems to generate warnings that I would prefer not to see
-      #inputs.nixpkgs.follows = "nixpkgs";
+      # follow our nixpkgs; programs.nixvim.nixpkgs.source is set explicitly
+      # in editor.nix to acknowledge the divergence from nixvim's own pin
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-    mac-app-util.url = "github:hraban/mac-app-util";
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # reference my catalogue of language- and tool-specific devshells
     devshells.url = "github:ispeters/devshells";
