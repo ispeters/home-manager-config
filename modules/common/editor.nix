@@ -39,6 +39,17 @@
     plugins.lsp.enable = true;
 
     extraConfigLua = ''
+      -- Rotate the LSP log at startup so it can't grow without bound: if it's
+      -- over 10 MiB, keep it as lsp.log.old (replacing any previous one) and
+      -- let Neovim start a fresh log.
+      do
+        local log = vim.lsp.log.get_filename()
+        local stat = vim.uv.fs_stat(log)
+        if stat and stat.size > 10 * 1024 * 1024 then
+          vim.uv.fs_rename(log, log .. ".old")
+        end
+      end
+
       -- conditionally enable various LSPs based on whether they're
       -- available on in PATH; my Nix configuration mostly delegates
       -- LSP installation to Nix devshells, so the availability
