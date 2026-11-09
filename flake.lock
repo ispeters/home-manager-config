@@ -45,11 +45,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794180964,
-        "narHash": "sha256-3oYotSF3LsRn3t+CYSUxn1cgR9mN+hcdH/HAvMZbqs8=",
+        "lastModified": 1794199664,
+        "narHash": "sha256-s0Efbz3KQgC8wnJur90r4cNhhoL62hucs8jqMcto2lA=",
         "owner": "ispeters",
         "repo": "devshells",
-        "rev": "976edd2a9e073025750ae781a5e9a92caf980325",
+        "rev": "1ce3b829a6400005543c0a7f2d6f4b80ed5e1a54",
         "type": "github"
       },
       "original": {
