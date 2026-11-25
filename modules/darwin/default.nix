@@ -5,5 +5,6 @@ _: {
     ./mattermost.nix
     ./packages.nix
     ./rectangle.nix
+    ./repo-mirrors.nix
   ];
 }
